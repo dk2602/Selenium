@@ -20,7 +20,7 @@ namespace Selenium
         //// Najważniejsze zmienne
 
         int numberOfPictures = 10; // Ilość generowanych obrazków
-        int generate_startNumber = 22000; // Od którego elementu ciągu zaczynamy generować (Przydaten jak generujemy na kilka razy)
+        int generate_startNumber = 1; // Od którego elementu ciągu zaczynamy generować - pierwszy element to 1 (Przydaten jak generujemy na kilka razy)
         string path = @"D:\Uczelnia\MyShit\MyShit\Obrazki\WygenerowaneObrazki"; // Scieżka do folderu do którego mają trafić obrazki
         bool FirefoxChrome = true; // true  = Firefox, false = Chrome
         int sec = 6; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)

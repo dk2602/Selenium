@@ -56,7 +56,7 @@ namespace Selenium
                 driver.FindElement(By.ClassName("wolframAlphaWidgetBody")).FindElement(By.ClassName("m")).Click();
                 driver.SwitchTo().Frame("wolframAlphaWidgetResults25165");
                 IWebElement Image =  wait.Until<IWebElement>(d => driver.FindElement(By.Id("i_0200_1")));
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(1000); // Daje czas na wyświetlenie odpowiedniego obrazka przeglądarce
                 ((ITakesScreenshot)Image).GetScreenshot().SaveAsFile(path + "\\" + name + ".png", ScreenshotImageFormat.Png);
                 driver.SwitchTo().ParentFrame();
             }

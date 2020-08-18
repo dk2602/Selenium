@@ -22,6 +22,7 @@ namespace Selenium
         int generate_startNumber = 0; // Od którego elementu ciągu zaczynamy generować (Przydaten jak generujemy na kilka razy)
         string path = @"D:\Uczelnia\MyShit\MyShit\Obrazki\WygenerowaneObrazki"; // Scieżka do folderu do którego mają trafić obrazki
         bool FirefoxChrome = true; // true  = Firefox, false = Chrome
+        int sec = 3; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)
 
         ////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ namespace Selenium
         public void Wolfram()
         {
             Generator generator = new Generator(generate_startNumber);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(6);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(sec);
             driver.Url = "https://www.wolframalpha.com/widgets/view.jsp?id=f5abe18064d57c2e5a768504a2041036";
             driver.FindElement(By.ClassName("m")).Click();
             for (int i = 0; i < numberOfPictures; i++)

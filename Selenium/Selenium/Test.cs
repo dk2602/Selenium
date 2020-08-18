@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,10 +20,10 @@ namespace Selenium
         //// Najważniejsze zmienne
 
         int numberOfPictures = 10; // Ilość generowanych obrazków
-        int generate_startNumber = 0; // Od którego elementu ciągu zaczynamy generować (Przydaten jak generujemy na kilka razy)
+        int generate_startNumber = 22000; // Od którego elementu ciągu zaczynamy generować (Przydaten jak generujemy na kilka razy)
         string path = @"D:\Uczelnia\MyShit\MyShit\Obrazki\WygenerowaneObrazki"; // Scieżka do folderu do którego mają trafić obrazki
         bool FirefoxChrome = true; // true  = Firefox, false = Chrome
-        int sec = 4; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)(w tym momencie jest to w praktyce długość przerwy w sekundach między kolejnymi generowanymi obrazkami)
+        int sec = 6; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)
 
         ////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,17 +44,20 @@ namespace Selenium
         public void Wolfram()
         {
             Generator generator = new Generator(generate_startNumber);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(sec);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(sec));
             driver.Url = "https://www.wolframalpha.com/widgets/view.jsp?id=f5abe18064d57c2e5a768504a2041036";
             driver.FindElement(By.ClassName("m")).Click();
             for (int i = 0; i < numberOfPictures; i++)
             {
                 string name = generator.Generate();
-                var text = driver.FindElement(By.ClassName("wolframAlphaWidgetBody")).FindElement(By.Name("input1"));
+                IWebElement text = driver.FindElement(By.ClassName("wolframAlphaWidgetBody")).FindElement(By.Name("input1"));
                 text.Clear();
                 text.SendKeys(name);
                 driver.FindElement(By.ClassName("wolframAlphaWidgetBody")).FindElement(By.ClassName("m")).Click();
-                ((ITakesScreenshot)driver.SwitchTo().Frame("wolframAlphaWidgetResults25165").FindElement(By.Id("i_0200_1"))).GetScreenshot().SaveAsFile(path+"\\"+name+".png",ScreenshotImageFormat.Png);
+                driver.SwitchTo().Frame("wolframAlphaWidgetResults25165");
+                IWebElement Image =  wait.Until<IWebElement>(d => driver.FindElement(By.Id("i_0200_1")));
+                System.Threading.Thread.Sleep(1000);
+                ((ITakesScreenshot)Image).GetScreenshot().SaveAsFile(path + "\\" + name + ".png", ScreenshotImageFormat.Png);
                 driver.SwitchTo().ParentFrame();
             }
         }
@@ -69,7 +73,7 @@ namespace Selenium
     public class Generator
     {
         int current;
-        public Generator(int start = 0)
+        public Generator(int start = 1)
         {
             current = start;
         }

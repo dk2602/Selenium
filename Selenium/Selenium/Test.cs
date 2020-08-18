@@ -22,7 +22,7 @@ namespace Selenium
         int generate_startNumber = 0; // Od którego elementu ciągu zaczynamy generować (Przydaten jak generujemy na kilka razy)
         string path = @"D:\Uczelnia\MyShit\MyShit\Obrazki\WygenerowaneObrazki"; // Scieżka do folderu do którego mają trafić obrazki
         bool FirefoxChrome = true; // true  = Firefox, false = Chrome
-        int sec = 3; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)
+        int sec = 4; // czas maksymalnego oczekiwania na element (warto zmienić w zależności od szybkości internetu)
 
         ////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,18 +78,15 @@ namespace Selenium
         {
             string s = "";
             int temp = current;
-            bool flag = false;
-            while (temp>=0)
+            while (temp > 0)
             {
-                s = (char)((temp%26)+'a')+s;
-                temp = temp / 26;
-                if(temp==0)
+                if (temp % 27 == 0)
                 {
-                    if (flag)
-                        break;
-                    else
-                        flag = true;
+                    current++;
+                    return Generate();
                 }
+                s = (char)((temp % 27) + 'a' - 1) + s;
+                temp = temp / 27;
             }
             current++;
             return s;

@@ -1,2 +1,1 @@
-# Selenium
-Uruchamiamy test a nie program
+Uruchamianie przez test (Test>Test Explorer)
